@@ -18,6 +18,8 @@ body {
     padding: 0;
     background-color: #f6eee28c; /* Beige background */
     color: #4d1010; /* Dark text */
+    min-height: 100vh; /* Assure une hauteur minimale */
+    overflow-x: hidden; /* Empêche le scroll horizontal */
 }
 
 header {
@@ -48,6 +50,8 @@ nav a:hover {
 
 main {
     padding: 20px;
+    padding-bottom: 100px; /* Espace pour le footer */
+    min-height: calc(100vh - 100px); /* Hauteur minimale pour le scroll */
 }
 
 footer {
@@ -55,10 +59,11 @@ footer {
     padding: 15px;
     background: linear-gradient(135deg, #930808 0%, #B22222 100%);
     color: #F5F5DC;
-    position: fixed;
-    bottom: 0;
+    /* Changé de position: fixed à static pour éviter les problèmes de scroll */
+    position: static;
     width: 100%;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 40px; /* Ajout de marge pour séparer du contenu */
 }
 
 .login-button {
@@ -155,6 +160,11 @@ footer {
 
 .reviews-column {
     margin-top: 20px;
+    max-height: 60vh; /* Limite la hauteur de la section des commentaires */
+    overflow-y: auto; /* Scroll si trop de commentaires */
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
 }
 
 .review-card {
@@ -162,6 +172,9 @@ footer {
     color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid #E0E0E0;
+    max-height: 200px; /* Limite la hauteur maximale */
+    overflow-y: auto; /* Ajoute un scroll vertical si nécessaire */
+    word-wrap: break-word; /* Coupe les mots longs */
 }
 
 .review-card p {
