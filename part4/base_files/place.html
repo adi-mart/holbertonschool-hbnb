@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="Logo of application" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a class="login-button" href="login.html" id="login-link">Login</a>
+        </nav>
+    </header>
+    <main>
+        <section id="place-details" class="place-details">
+            <!-- Place details will be populated dynamically -->
+            <div class="place-info">
+                <h2>Luxury apartment</h2>
+                <p><strong>Host:</strong> Michael Jackson</p>
+                <p><strong>Price per night:</strong> 300€</p>
+                <p><strong>Description:</strong>Beautiful, very spacious apartment.</p>
+                <p><strong>Amenities:</strong> Wifi, swimming pool, dance floor.</p>
+            </div>
+        </section>
+        <!-- Place details will be populated dynamically -->
+        <div class="reviews-column">
+            <section id="reviews">
+                <h2>Reviews of the place</h2>
+                <div class="review-card">
+                    <p>Michael Jackson: </p>
+                    <p>Hi Hi ! I live this apartment</p>
+                    <p>Rating: 5/5</p>
+                </div>
+            </section>
+
+            <!-- Add a new review -->
+            <section id="add-review">
+                <h2>Add a Review</h2>
+                <form id="review-form">
+                    <label for="rating">Rating:</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select a rating</option>
+                        <option value="5">5 stars</option>
+                        <option value="4">4 stars</option>
+                        <option value="3">3 stars</option>
+                        <option value="2">2 stars</option>
+                        <option value="1">1 star</option>
+                    </select>
+                    <label for="review">Review:</label>
+                    <textarea id="review" name="review" required></textarea>
+                    <button type="submit">Submit Review</button>
+                </form>
+            </section>
+        </div>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>

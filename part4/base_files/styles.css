@@ -1,0 +1,231 @@
+/* Basic styles for the HBnB application */
+
+/* Place and review cards styling */
+/* Fixed parameters for place and review cards - DO NOT MODIFY */
+.place-card,
+.review-card,
+.place-info {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* Additional basic styling */
+body {
+    font-family: 'Arial', sans-serif; /* Clean font */
+    margin: 0;
+    padding: 0;
+    background-color: #f6eee28c; /* Beige background */
+    color: #4d1010; /* Dark text */
+}
+
+header {
+    background: linear-gradient(135deg, #930808 0%, #B22222 100%); /* Red gradient */
+    color: #F5F5DC;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header img {
+    height: 50px;
+}
+
+nav a {
+    color: #F5F5DC; /* Beige links */
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #FFF; /* White on hover */
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #930808 0%, #B22222 100%);
+    color: #F5F5DC;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-button {
+    background-color: #DC143C; /* Red button */
+    color: #F5F5DC; /* Beige text */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #B22222; /* Darker red */
+    transform: scale(1.05);
+}
+
+#filter {
+    margin-bottom: 20px;
+    color: #DC143C;
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+}
+
+#filter h2 {
+    margin-top: 0;
+    color: #DC143C;
+    font-size: 1.2em;
+}
+
+#filter select {
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+#filter select:focus {
+    outline: none;
+    border-color: #DC143C;
+}
+
+#places-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.place-card {
+    background: linear-gradient(145deg, #FFF 0%, #F9F9F9 100%);
+    color: #333;
+    width: calc(33% - 40px);
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #E0E0E0;
+}
+
+.place-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.place-card h3 {
+    margin-top: 0;
+    color: #DC143C; /* Red headings */
+}
+
+.place-card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #DC143C; /* Red links */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.place-card a:hover {
+    color: #B22222; /* Darker red */
+}
+
+.place-details {
+    background: linear-gradient(145deg, #FFF 0%, #F9F9F9 100%);
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+}
+
+.reviews-column {
+    margin-top: 20px;
+}
+
+.review-card {
+    background: linear-gradient(145deg, #FAF0E6 0%, #F5DEB3 100%);
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+}
+
+.review-card p {
+    margin: 5px 0;
+}
+
+.review-card strong {
+    color: #DC143C; /* Red for names */
+}
+
+form#login-form {
+    background-color: #FFF;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+form#login-form h2 {
+    text-align: center;
+    color: #DC143C;
+    margin-bottom: 20px;
+}
+
+form#login-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+}
+
+form#login-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form#login-form input:focus {
+    outline: none;
+    border-color: #DC143C;
+    box-shadow: 0 0 5px rgba(220, 20, 60, 0.3);
+}
+
+form#login-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #DC143C;
+    color: #F5F5DC;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+form#login-form button:hover {
+    background-color: #B22222;
+    transform: translateY(-2px);
+}
