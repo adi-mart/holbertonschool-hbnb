@@ -92,7 +92,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 function checkAuthentication() {
     const token = getCookie('token');
     const loginLink = document.getElementById('login-link');
-    const addReviewSection = document.getElementById('add-review');
+    const btnContainer = document.getElementById('add-review-button-container');
+    const reviewForm = document.getElementById('review-form');
     const path = window.location.pathname;
     
     if (token && loginLink) {
@@ -101,19 +102,21 @@ function checkAuthentication() {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             window.location.href = 'login.html';
         };
+        // Connecté : cacher le bouton et afficher le formulaire
+        if (btnContainer) btnContainer.style.display = 'none';
+        if (reviewForm) reviewForm.style.display = 'block';
     } else {
         if (loginLink) loginLink.style.display = 'block';
-        if (addReviewSection) addReviewSection.style.display = 'none';
+        // Pas connecté : afficher le bouton et cacher le formulaire
+        if (btnContainer) btnContainer.style.display = 'block';
+        if (reviewForm) reviewForm.style.display = 'none';
+        
         // Rediriger si sur add_review sans authentification
         if (path.includes('add_review.html')) {
             alert('You must be logged in to access this page.');
             window.location.href = 'index.html';
             return;
         }
-    }
-    
-    if (token && addReviewSection) {
-        addReviewSection.style.display = 'block';
     }
     
     return token;
@@ -266,7 +269,7 @@ function displayReviews(reviews) {
         div.innerHTML = `
             <p><strong>${review.user?.first_name || 'Anonymous'}:</strong></p>
             <p>${review.text}</p>
-            <p>Rating: ${review.rating}/5</p>
+            <p>Rating: ${review.rating}★</p>
         `;
         container.appendChild(div);
     });
