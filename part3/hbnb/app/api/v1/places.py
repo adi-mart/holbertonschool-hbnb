@@ -13,8 +13,8 @@ amenity_model = api.model('PlaceAmenity', {
 })
 
 amenity_link_model = api.model('PlaceAmenityLink', {
-    'name': fields.String(required=True,
-                          description='Name of the amenity to add')
+    'amenity_id': fields.String(required=True,
+                               description='ID of the amenity to add')
 })
 
 user_model = api.model('PlaceUser', {
@@ -120,6 +120,27 @@ class PlaceResource(Resource):
             for amenity in place.amenities
         ]
 
+        # Récupérer les informations du propriétaire
+        owner = facade.get_user(place.owner_id)
+        owner_info = {
+            'id': owner.id,
+            'first_name': owner.first_name,
+            'last_name': owner.last_name,
+            'email': owner.email
+        }
+
+        # Récupérer les reviews de cette place
+        reviews = facade.get_reviews_by_place(place_id)
+        place_reviews = [
+            {
+                'id': review.id,
+                'text': review.text,
+                'rating': review.rating,
+                'user_id': review.user_id
+            }
+            for review in reviews
+        ]
+
         return {
             'id': place.id,
             'title': place.title,
@@ -127,7 +148,10 @@ class PlaceResource(Resource):
             'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
-            'owner_id': place.owner_id
+            'owner_id': place.owner_id,
+            'owner': owner_info,
+            'amenities': place_amenities,
+            'reviews': place_reviews
         }, 200
 
     @jwt_required()
@@ -256,14 +280,10 @@ class PlaceAmenityList(Resource):
         current_user_id = get_jwt_identity()
         data = api.payload
 
-        # Vérifier que place_id est fourni
-        if not place_id:
-            return {"error": "Place ID is required"}, 400
-
-        # Vérifier que le nom de l'amenity est fourni
-        amenity_name = data.get('name')
-        if not amenity_name or not amenity_name.strip():
-            return {"error": "Amenity name is required"}, 400
+        # Vérifier que l'amenity_id est fourni
+        amenity_id = data.get('amenity_id')
+        if not amenity_id or not amenity_id.strip():
+            return {"error": "Amenity ID is required"}, 400
 
         # Vérifier que la place existe
         place = facade.get_place(place_id)
@@ -277,11 +297,10 @@ class PlaceAmenityList(Resource):
             return {'error': 'Unauthorized action'}, 403
 
         try:
-            # Récupérer ou créer l'amenity par son nom
-            amenity = facade.get_amenity_by_name(amenity_name.strip())
+            # Vérifier que l'amenity existe
+            amenity = facade.get_amenity(amenity_id.strip())
             if not amenity:
-                # Créer l'amenity si elle n'existe pas
-                amenity = facade.create_amenity({'name': amenity_name.strip()})
+                return {"error": "Amenity not found"}, 404
 
             if amenity in place.amenities:
                 return {
@@ -291,7 +310,7 @@ class PlaceAmenityList(Resource):
                 }, 409
 
             # Ajouter l'amenity au place
-            facade.add_amenity_to_place(place_id, amenity.id)
+            facade.add_amenity_to_place(place_id, amenity_id.strip())
             return {"message": "Amenity successfully added to place"}, 201
         except ValueError as e:
             return {'error': str(e)}, 400

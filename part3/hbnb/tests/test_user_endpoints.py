@@ -18,6 +18,7 @@ class TestUserEndpoints(unittest.TestCase):
             "first_name": "Jane",
             "last_name": "Doe",
             "email": "jane.doe@example.com"
+            "password": "password123"
         })
         self.assertEqual(response.status_code, 201)
 
