@@ -124,6 +124,9 @@ class PlaceResource(Resource):
 
         # Récupérer les informations du propriétaire
         owner = facade.get_user(place.owner_id)
+        if owner is None:
+            return {'error': 'Place owner not found'}, 404
+        
         owner_info = {
             'id': owner.id,
             'first_name': owner.first_name,
@@ -136,16 +139,30 @@ class PlaceResource(Resource):
         place_reviews = []
         for review in reviews:
             user = facade.get_user(review.user_id)
-            place_reviews.append({
-                'id': review.id,
-                'text': review.text,
-                'rating': review.rating,
-                'user': {
-                    'id': user.id,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name
-                }
-            })
+            # Vérifier si l'utilisateur existe
+            if user is not None:
+                place_reviews.append({
+                    'id': review.id,
+                    'text': review.text,
+                    'rating': review.rating,
+                    'user': {
+                        'id': user.id,
+                        'first_name': user.first_name,
+                        'last_name': user.last_name
+                    }
+                })
+            else:
+                # Si l'utilisateur n'existe pas, afficher un utilisateur par défaut
+                place_reviews.append({
+                    'id': review.id,
+                    'text': review.text,
+                    'rating': review.rating,
+                    'user': {
+                        'id': 'unknown',
+                        'first_name': 'Utilisateur',
+                        'last_name': 'Supprimé'
+                    }
+                })
 
         return {
             'id': place.id,
@@ -250,12 +267,17 @@ class PlaceReviewList(Resource):
         result = []
         for review in reviews:
             user = facade.get_user(review.user_id)
+            if user is not None:
+                user_name = f"{user.first_name} {user.last_name}"
+            else:
+                user_name = "Utilisateur Supprimé"
+            
             result.append({
                 'id': review.id,
                 'text': review.text,
                 'rating': review.rating,
                 'user_id': review.user_id,
-                'user_name': f"{user.first_name} {user.last_name}"
+                'user_name': user_name
             })
         return result, 200
 
