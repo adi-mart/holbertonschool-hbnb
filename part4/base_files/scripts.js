@@ -1,9 +1,17 @@
+
+/**
+ * HBnB Frontend - Client JavaScript
+ * Handles authentication, places display, reviews and API calls
+ */
+
+// CONFIGURATION
 const API_BASE_URL = 'http://127.0.0.1:5000/api/v1';
 
+// INITIALISATION DOM
 document.addEventListener('DOMContentLoaded', async () => {
     checkAuthentication();
     
-    // Page index - Liste des lieux
+    // Index page - Places list
     if (document.getElementById('places-list')) {
         const places = await fetchPlaces();
         window.allPlaces = places; // Stocker pour le filtrage
@@ -35,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Page place - Détails du lieu
+    // Place details page
     if (document.getElementById('place-details') && !document.getElementById('review-form')) {
         const placeId = getPlaceIdFromURL();
         if (placeId) {
@@ -44,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-    // Page add_review - Formulaire d'avis
+    // Add review page
     if (document.getElementById('review-form')) {
         const placeId = getPlaceIdFromURL();
         if (placeId) {
@@ -77,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
     
-    // Page login - Connexion
+    // Login page
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -89,6 +97,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// AUTHENTIFICATION
+// Check user authentication status and update UI accordingly
 function checkAuthentication() {
     const token = getCookie('token');
     const loginLink = document.getElementById('login-link');
@@ -102,16 +112,13 @@ function checkAuthentication() {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             window.location.href = 'login.html';
         };
-        // Connecté : cacher le bouton et afficher le formulaire
         if (btnContainer) btnContainer.style.display = 'none';
         if (reviewForm) reviewForm.style.display = 'block';
     } else {
         if (loginLink) loginLink.style.display = 'block';
-        // Pas connecté : afficher le bouton et cacher le formulaire
         if (btnContainer) btnContainer.style.display = 'block';
         if (reviewForm) reviewForm.style.display = 'none';
-        
-        // Rediriger si sur add_review sans authentification
+
         if (path.includes('add_review.html')) {
             alert('You must be logged in to access this page.');
             window.location.href = 'index.html';
@@ -122,6 +129,7 @@ function checkAuthentication() {
     return token;
 }
 
+// Authenticate user with email/password
 async function loginUser(email, password) {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -142,6 +150,8 @@ async function loginUser(email, password) {
     }
 }
 
+// API CALLS
+// Fetch all places from API
 async function fetchPlaces() {
     const token = getCookie('token');
     const headers = { 'Content-Type': 'application/json' };
@@ -159,6 +169,7 @@ async function fetchPlaces() {
     return result.error ? [] : result;
 }
 
+// Get detailed info for a specific place
 async function fetchPlaceDetails(placeId) {
     const token = getCookie('token');
     const headers = { 'Content-Type': 'application/json' };
@@ -180,6 +191,7 @@ async function fetchPlaceDetails(placeId) {
     }
 }
 
+// Fetch reviews for a specific place
 async function fetchReviews(placeId) {
     const response = await fetch(`${API_BASE_URL}/places/${placeId}/reviews`);
     const result = await handleApiResponse(response);
@@ -189,6 +201,7 @@ async function fetchReviews(placeId) {
     }
 }
 
+// Submit new review for a place (authenticated only)
 async function submitReview(placeId, reviewData) {
     const token = getCookie('token');
     if (!token) {
@@ -213,6 +226,8 @@ async function submitReview(placeId, reviewData) {
     return await handleApiResponse(response);
 }
 
+// DISPLAY FUNCTIONS
+// Render places list on index page
 function displayPlaces(places) {
     const container = document.getElementById('places-list');
     if (!container) return;
@@ -237,6 +252,7 @@ function displayPlaces(places) {
     });
 }
 
+// Display detailed place info on place page
 function displayPlaceDetails(place) {
     const container = document.querySelector('.place-info');
     if (!container) return;
@@ -256,6 +272,7 @@ function displayPlaceDetails(place) {
     `;
 }
 
+// Render reviews list for a place
 function displayReviews(reviews) {
     const container = document.getElementById('reviews');
     if (!container) return;
@@ -282,6 +299,7 @@ function displayReviews(reviews) {
     });
 }
 
+// Check if user can review this place (not their own)
 async function checkReviewButton(place) {
     const btn = document.getElementById('add-review-btn');
     if (!btn) return;
@@ -321,6 +339,8 @@ async function getCurrentUserId() {
     return null;
 }
 
+// UTILITIES
+// Handle API response and errors uniformly
 async function handleApiResponse(response) {
     if (response.ok) {
         return await response.json();
@@ -330,6 +350,7 @@ async function handleApiResponse(response) {
     }
 }
 
+// Get cookie value by name
 function getCookie(name) {
     const cookies = document.cookie.split('; ');
     for (const cookie of cookies) {
