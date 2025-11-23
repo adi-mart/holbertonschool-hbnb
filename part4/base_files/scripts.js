@@ -162,18 +162,18 @@ async function fetchPlaces() {
 async function fetchPlaceDetails(placeId) {
     const token = getCookie('token');
     const headers = { 'Content-Type': 'application/json' };
-    
+
     if (token) {
         headers['Authorization'] = `Bearer ${token}`;
     }
-    
+
     const response = await fetch(`${API_BASE_URL}/places/${placeId}`, {
         method: 'GET',
         headers: headers
     });
     
     const result = await handleApiResponse(response);
-    
+
     if (!result.error) {
         displayPlaceDetails(result);
         await checkReviewButton(result);
@@ -196,7 +196,7 @@ async function submitReview(placeId, reviewData) {
         window.location.href = 'login.html';
         return;
     }
-	
+
     const response = await fetch(`${API_BASE_URL}/reviews/`, {
         method: 'POST',
         headers: {
@@ -216,14 +216,14 @@ async function submitReview(placeId, reviewData) {
 function displayPlaces(places) {
     const container = document.getElementById('places-list');
     if (!container) return;
-    
+
     container.innerHTML = '';
-    
+
     if (!places || places.length === 0) {
         container.innerHTML = '<p>No places available</p>';
         return;
     }
-    
+
     places.forEach(place => {
         const div = document.createElement('div');
         div.className = 'place-card';
@@ -240,10 +240,11 @@ function displayPlaces(places) {
 function displayPlaceDetails(place) {
     const container = document.querySelector('.place-info');
     if (!container) return;
-    
+    const ownerName = place.owner ? `${place.owner.first_name} ${place.owner.last_name}` : 'Unknown Host';
+
     container.innerHTML = `
         <h2>${place.title || place.name}</h2>
-        <p><strong>Host:</strong> ${place.owner_name}</p>
+        <p><strong>Host:</strong> ${ownerName}</p>
         <p><strong>Price:</strong> ${place.price}€/night</p>
         <p><strong>Description:</strong> ${place.description || 'No description'}</p>
         <p><strong>Amenities:</strong> ${place.amenities?.map(a => a.name).join(', ') || 'None'}</p>

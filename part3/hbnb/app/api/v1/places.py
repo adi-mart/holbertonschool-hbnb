@@ -98,7 +98,12 @@ class PlaceList(Resource):
                 'title': place.title,
                 'price': place.price,
                 'latitude': place.latitude,
-                'longitude': place.longitude
+                'longitude': place.longitude,
+                'owner': {
+                    'id': place.owner.id,
+                    'first_name': place.owner.first_name,
+                    'last_name': place.owner.last_name
+                } if place.owner else None
             } for place in places
         ], 200
 
@@ -122,16 +127,15 @@ class PlaceResource(Resource):
             for amenity in place.amenities
         ]
 
-        # Récupérer les informations du propriétaire
-        owner = facade.get_user(place.owner_id)
-        if owner is None:
+        # Récupérer les informations du propriétaire via la relation
+        if not place.owner:
             return {'error': 'Place owner not found'}, 404
         
         owner_info = {
-            'id': owner.id,
-            'first_name': owner.first_name,
-            'last_name': owner.last_name,
-            'email': owner.email
+            'id': place.owner.id,
+            'first_name': place.owner.first_name,
+            'last_name': place.owner.last_name,
+            'email': place.owner.email
         }
 
         # Récupérer les reviews de cette place
@@ -172,10 +176,10 @@ class PlaceResource(Resource):
             'latitude': place.latitude,
             'longitude': place.longitude,
             'owner': {
-                'id': owner.id,
-                'first_name': owner.first_name,
-                'last_name': owner.last_name,
-                'email': owner.email
+                'id': place.owner.id,
+                'first_name': place.owner.first_name,
+                'last_name': place.owner.last_name,
+                'email': place.owner.email
             },
             'amenities': place_amenities,
             'reviews': place_reviews

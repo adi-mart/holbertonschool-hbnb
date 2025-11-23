@@ -28,6 +28,10 @@ class Review(BaseModel):
         nullable=False
     )
 
+    # Relationships
+    user = db.relationship('User', back_populates='reviews')
+    place = db.relationship('Place', back_populates='reviews')
+
     def __init__(
             self, text, rating, user=None, place=None,
             user_id=None, place_id=None):
