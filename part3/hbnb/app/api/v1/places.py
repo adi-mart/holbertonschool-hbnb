@@ -96,7 +96,9 @@ class PlaceList(Resource):
             {
                 'id': place.id,
                 'title': place.title,
-                'price': place.price
+                'price': place.price,
+                'latitude': place.latitude,
+                'longitude': place.longitude
             } for place in places
         ], 200
 
@@ -131,15 +133,19 @@ class PlaceResource(Resource):
 
         # Récupérer les reviews de cette place
         reviews = facade.get_reviews_by_place(place_id)
-        place_reviews = [
-            {
+        place_reviews = []
+        for review in reviews:
+            user = facade.get_user(review.user_id)
+            place_reviews.append({
                 'id': review.id,
                 'text': review.text,
                 'rating': review.rating,
-                'user_id': review.user_id
-            }
-            for review in reviews
-        ]
+                'user': {
+                    'id': user.id,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name
+                }
+            })
 
         return {
             'id': place.id,
@@ -148,8 +154,12 @@ class PlaceResource(Resource):
             'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
-            'owner_id': place.owner_id,
-            'owner': owner_info,
+            'owner': {
+                'id': owner.id,
+                'first_name': owner.first_name,
+                'last_name': owner.last_name,
+                'email': owner.email
+            },
             'amenities': place_amenities,
             'reviews': place_reviews
         }, 200
@@ -237,13 +247,17 @@ class PlaceReviewList(Resource):
             return {"error": "Place not found"}, 404
 
         reviews = facade.get_reviews_by_place(place_id)
-        return [
-            {
+        result = []
+        for review in reviews:
+            user = facade.get_user(review.user_id)
+            result.append({
                 'id': review.id,
                 'text': review.text,
-                'rating': review.rating
-            } for review in reviews
-        ], 200
+                'rating': review.rating,
+                'user_id': review.user_id,
+                'user_name': f"{user.first_name} {user.last_name}"
+            })
+        return result, 200
 
 
 @api.route('/<place_id>/amenities')

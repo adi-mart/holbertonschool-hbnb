@@ -243,7 +243,7 @@ function displayPlaceDetails(place) {
     
     container.innerHTML = `
         <h2>${place.title || place.name}</h2>
-        <p><strong>Host:</strong> ${place.host?.first_name || 'Unknown'} ${place.host?.last_name || ''}</p>
+        <p><strong>Host:</strong> ${place.owner_name}</p>
         <p><strong>Price:</strong> ${place.price}€/night</p>
         <p><strong>Description:</strong> ${place.description || 'No description'}</p>
         <p><strong>Amenities:</strong> ${place.amenities?.map(a => a.name).join(', ') || 'None'}</p>
@@ -266,8 +266,9 @@ function displayReviews(reviews) {
     reviews.forEach(review => {
         const div = document.createElement('div');
         div.className = 'review-card';
+        const userName = review.user_name;
         div.innerHTML = `
-            <p><strong>${review.user?.first_name || 'Anonymous'}:</strong></p>
+            <p><strong>${userName}:</strong></p>
             <p>${review.text}</p>
             <p>Rating: ${review.rating}★</p>
         `;
