@@ -229,8 +229,8 @@ function displayPlaces(places) {
         div.className = 'place-card';
         div.innerHTML = `
             <h3>${place.title || place.name}</h3>
-            <p>Price per night: <strong>${place.price}€</strong></p>
-            <p>${place.description?.substring(0, 100) || ''}...</p>
+            <p>Price per night: ${place.price}€</p>
+            <p>${place.description || ''}</p>
             <button class="details-button" onclick="window.location.href='place.html?place_id=${place.id}'">View Details</button>
         `;
         container.appendChild(div);
@@ -242,8 +242,13 @@ function displayPlaceDetails(place) {
     if (!container) return;
     const ownerName = place.owner ? `${place.owner.first_name} ${place.owner.last_name}` : 'Unknown Host';
 
+    // Mettre à jour le titre principal
+    const placeTitle = document.getElementById('place-title');
+    if (placeTitle) {
+        placeTitle.textContent = place.title || place.name;
+    }
+
     container.innerHTML = `
-        <h2>${place.title || place.name}</h2>
         <p><strong>Host:</strong> ${ownerName}</p>
         <p><strong>Price:</strong> ${place.price}€/night</p>
         <p><strong>Description:</strong> ${place.description || 'No description'}</p>
@@ -271,7 +276,7 @@ function displayReviews(reviews) {
         div.innerHTML = `
             <p><strong>${userName}:</strong></p>
             <p>${review.text}</p>
-            <p>Rating: ${review.rating}★</p>
+            <p>Rating: ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</p>
         `;
         container.appendChild(div);
     });

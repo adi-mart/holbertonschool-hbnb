@@ -1,7 +1,8 @@
-/* Basic styles for the HBnB application */
+/* =============================================================================
+   HBNB APPLICATION STYLES
+   ============================================================================= */
 
-/* Place and review cards styling */
-/* Fixed parameters for place and review cards - DO NOT MODIFY */
+/* FIXED PARAMETERS - DO NOT MODIFY */
 .place-card,
 .review-card,
 .place-info {
@@ -11,33 +12,54 @@
     border-radius: 10px;
 }
 
-/* Additional basic styling */
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+
+/* Global body styles */
 body {
-    font-family: 'Arial', sans-serif; /* Clean font */
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f6eee28c; /* Beige background */
-    color: #4d1010; /* Dark text */
-    min-height: 100vh; /* Assure une hauteur minimale */
-    overflow-x: hidden; /* Empêche le scroll horizontal */
+    background-color: #f6eee28c;
+    color: #4d1010;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.2;
 }
 
+/* Main content container */
+main {
+    padding: 20px;
+    padding-bottom: 40px;
+    min-height: calc(100vh - 100px);
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* =============================================================================
+   HEADER SECTION
+   ============================================================================= */
+
+/* Header container */
 header {
-    background: linear-gradient(135deg, #930808 0%, #B22222 100%); /* Red gradient */
+    background: linear-gradient(135deg, #930808 0%, #B22222 100%);
     color: #F5F5DC;
     padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
+/* Logo styling */
 header img {
-    height: 50px;
+    height: 55px;
 }
 
+/* Navigation links */
 nav a {
-    color: #F5F5DC; /* Beige links */
+    color: #F5F5DC;
     text-decoration: none;
     margin: 0 10px;
     font-weight: bold;
@@ -45,30 +67,32 @@ nav a {
 }
 
 nav a:hover {
-    color: #FFF; /* White on hover */
+    color: #FFF;
 }
 
-main {
-    padding: 20px;
-    padding-bottom: 100px; /* Espace pour le footer */
-    min-height: calc(100vh - 100px); /* Hauteur minimale pour le scroll */
-}
+/* =============================================================================
+   FOOTER SECTION
+   ============================================================================= */
 
 footer {
     text-align: center;
     padding: 15px;
     background: linear-gradient(135deg, #930808 0%, #B22222 100%);
     color: #F5F5DC;
-    /* Changé de position: fixed à static pour éviter les problèmes de scroll */
     position: static;
     width: 100%;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 40px; /* Ajout de marge pour séparer du contenu */
+    margin-top: 20px;
 }
 
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+/* Login button */
 .login-button {
-    background-color: #DC143C; /* Red button */
-    color: #F5F5DC; /* Beige text */
+    background-color: #DC143C;
+    color: #F5F5DC;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
@@ -77,24 +101,63 @@ footer {
 }
 
 .login-button:hover {
-    background-color: #B22222; /* Darker red */
+    background-color: #B22222;
     transform: scale(1.05);
 }
 
+/* Details button */
+.details-button {
+    background-color: #DC143C;
+    color: #F5F5DC;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1px;
+}
+
+.details-button:hover {
+    background-color: #B22222;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* =============================================================================
+   PLACE DETAILS PAGE
+   ============================================================================= */
+
+/* Place title */
+#place-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+}
+
+/* Place details container */
+.place-details {
+    color: #333;
+    max-width: 800px;
+    margin: auto;
+    padding: 10px;
+}
+
+/* =============================================================================
+   PLACES LISTING PAGE
+   ============================================================================= */
+
+/* Filter section */
 #filter {
     margin-bottom: 20px;
     color: #DC143C;
-    background-color: #FFF;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #E0E0E0;
+    text-align: center;
 }
 
 #filter h2 {
     margin-top: 0;
     color: #DC143C;
-    font-size: 1.2em;
+    font-size: 2.2em;
 }
 
 #filter select {
@@ -111,70 +174,69 @@ footer {
     border-color: #DC143C;
 }
 
+/* Places grid */
 #places-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1px;
 }
 
+/* Place cards */
 .place-card {
-    background: linear-gradient(145deg, #FFF 0%, #F9F9F9 100%);
     color: #333;
-    width: calc(33% - 40px);
     box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #E0E0E0;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
 }
 
 .place-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .place-card h3 {
     margin-top: 0;
-    color: #DC143C; /* Red headings */
+    color: #DC143C;
+    font-size: 1.4em;
 }
 
 .place-card a {
     display: inline-block;
     margin-top: 10px;
-    color: #DC143C; /* Red links */
+    color: #DC143C;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
-.place-card a:hover {
-    color: #B22222; /* Darker red */
-}
+/* =============================================================================
+   REVIEWS SECTION
+   ============================================================================= */
 
-.place-details {
-    background: linear-gradient(145deg, #FFF 0%, #F9F9F9 100%);
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #E0E0E0;
-}
-
+/* Reviews container */
 .reviews-column {
-    margin-top: 20px;
-    max-height: 60vh; /* Limite la hauteur de la section des commentaires */
-    overflow-y: auto; /* Scroll si trop de commentaires */
+    margin-top: 0px;
+    max-height: 60vh;
+    overflow-y: auto;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
+    border: 1px solid #E0E0E0;
 }
 
+/* Individual review cards */
 .review-card {
     background: linear-gradient(145deg, #FAF0E6 0%, #F5DEB3 100%);
     color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid #E0E0E0;
-    max-height: 200px; /* Limite la hauteur maximale */
-    overflow-y: auto; /* Ajoute un scroll vertical si nécessaire */
-    word-wrap: break-word; /* Coupe les mots longs */
+    max-height: 200px;
+    overflow-y: auto;
+    word-wrap: break-word;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .review-card p {
@@ -182,9 +244,14 @@ footer {
 }
 
 .review-card strong {
-    color: #DC143C; /* Red for names */
+    color: #DC143C;
 }
 
+/* =============================================================================
+   LOGIN FORM
+   ============================================================================= */
+
+/* Login form container */
 form#login-form {
     background-color: #FFF;
     padding: 30px;
@@ -195,12 +262,14 @@ form#login-form {
     margin: 50px auto;
 }
 
+/* Login form title */
 form#login-form h2 {
     text-align: center;
     color: #DC143C;
     margin-bottom: 20px;
 }
 
+/* Login form labels */
 form#login-form label {
     display: block;
     margin-bottom: 8px;
@@ -208,6 +277,7 @@ form#login-form label {
     font-weight: bold;
 }
 
+/* Login form inputs */
 form#login-form input {
     width: 100%;
     padding: 12px;
@@ -225,6 +295,7 @@ form#login-form input:focus {
     box-shadow: 0 0 5px rgba(220, 20, 60, 0.3);
 }
 
+/* Login form button */
 form#login-form button {
     width: 100%;
     padding: 12px;
