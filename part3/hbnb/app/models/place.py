@@ -39,9 +39,10 @@ class Place(BaseModel):
     )
 
     # Relationships
+    owner = db.relationship('User', back_populates='places')
     reviews = db.relationship(
         'Review',
-        backref='place',
+        back_populates='place',
         lazy=True,
         cascade='all, delete-orphan'
     )
@@ -49,7 +50,7 @@ class Place(BaseModel):
         'Amenity',
         secondary=place_amenity,
         lazy='subquery',
-        backref=db.backref('places', lazy=True)
+        back_populates='places'
     )
 
     def __init__(self, title, description, price, latitude, longitude, owner):

@@ -1,0 +1,319 @@
+/* =============================================================================
+   HBNB APPLICATION STYLES
+   ============================================================================= */
+
+/* FIXED PARAMETERS - DO NOT MODIFY */
+.place-card,
+.review-card,
+.place-info {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
+
+/* Global body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f6eee28c;
+    color: #4d1010;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.2;
+}
+
+/* Main content container */
+main {
+    padding: 20px;
+    padding-bottom: 40px;
+    min-height: calc(100vh - 100px);
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* =============================================================================
+   HEADER SECTION
+   ============================================================================= */
+
+/* Header container */
+header {
+    background: linear-gradient(135deg, #b30606 0%, #B22222 100%);
+    color: #F5F5DC;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo styling */
+header img {
+    height: 55px;
+}
+
+/* Navigation links */
+nav a {
+    color: #F5F5DC;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #FFF;
+}
+
+/* =============================================================================
+   FOOTER SECTION
+   ============================================================================= */
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #930808 0%, #B22222 100%);
+    color: #F5F5DC;
+    position: static;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+/* Login button */
+.login-button {
+    background-color: #DC143C;
+    color: #F5F5DC;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #B22222;
+    transform: scale(1.05);
+}
+
+/* Details button */
+.details-button {
+    background-color: #DC143C;
+    color: #F5F5DC;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1px;
+}
+
+.details-button:hover {
+    background-color: #B22222;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* =============================================================================
+   PLACE DETAILS PAGE
+   ============================================================================= */
+
+/* Place title */
+#place-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+}
+
+/* Place details container */
+.place-details {
+    color: #333;
+    max-width: 800px;
+    margin: auto;
+    padding: 10px;
+}
+
+/* =============================================================================
+   PLACES LISTING PAGE
+   ============================================================================= */
+
+/* Filter section */
+#filter {
+    margin-bottom: 20px;
+    color: #DC143C;
+    padding: 20px;
+    text-align: center;
+}
+
+#filter h2 {
+    margin-top: 0;
+    color: #000;
+    font-size: 2.2em;
+}
+
+.select-price {
+    color: #000;
+}
+
+#filter select {
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+#filter select:focus {
+    outline: none;
+    border-color: #DC143C;
+}
+
+/* Places grid */
+#places-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1px;
+}
+
+/* Place cards */
+.place-card {
+    color: #333;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.place-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.place-card h3 {
+    margin-top: 0;
+    color: #DC143C;
+    font-size: 1.4em;
+}
+
+.place-card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #DC143C;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* =============================================================================
+   REVIEWS SECTION
+   ============================================================================= */
+
+/* Reviews container */
+.reviews-column {
+    margin-top: 0px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    border: 1px solid #E0E0E0;
+}
+
+/* Individual review cards */
+.review-card {
+    background: linear-gradient(145deg, #FAF0E6 0%, #F5DEB3 100%);
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+    max-height: 200px;
+    overflow-y: auto;
+    word-wrap: break-word;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.review-card p {
+    margin: 5px 0;
+}
+
+.review-card strong {
+    color: #DC143C;
+}
+
+/* =============================================================================
+   LOGIN FORM
+   ============================================================================= */
+
+/* Login form container */
+form#login-form {
+    background-color: #FFF;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+/* Login form title */
+form#login-form h2 {
+    text-align: center;
+    color: #DC143C;
+    margin-bottom: 20px;
+}
+
+/* Login form labels */
+form#login-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Login form inputs */
+form#login-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form#login-form input:focus {
+    outline: none;
+    border-color: #DC143C;
+    box-shadow: 0 0 5px rgba(220, 20, 60, 0.3);
+}
+
+/* Login form button */
+form#login-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #DC143C;
+    color: #F5F5DC;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+form#login-form button:hover {
+    background-color: #B22222;
+    transform: translateY(-2px);
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- HEAD SECTION: Meta data and external resources -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Places</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body>
+    <!-- HEADER SECTION: Navigation and branding -->
+    <header>
+        <a href="index.html"><img src="images/logo.png" alt="Logo of application" class="logo"></a>
+        <nav>
+            <a class="login-button" href="login.html" id="login-link">Login</a>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT SECTION -->
+    <main>
+        <!-- FILTER SECTION: Price filtering controls -->
+        <section id="filter">
+            <h2>Available Places</h2>
+            <label class="select-price" for="price-filter">Max Price:</label>
+            <select id="price-filter">
+                <!-- Options will be populated dynamically -->
+                <option value="all">all</option>
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </section>
+
+        <!-- PLACES LIST SECTION: Display all available places -->
+        <section id="places-list">
+            <h2>Places List</h2>
+            <!-- List of places will be populated dynamically -->
+        </section>
+    </main>
+
+    <!-- FOOTER SECTION: Copyright information -->
+    <footer>
+        © 2025 - Holberton-HBnB - All Rights Reserved.
+    </footer>
+
+    <!-- SCRIPTS: JavaScript functionality -->
+    <script src="scripts.js"></script>
+</body>
+</html>

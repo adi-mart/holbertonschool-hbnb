@@ -13,8 +13,8 @@ amenity_model = api.model('PlaceAmenity', {
 })
 
 amenity_link_model = api.model('PlaceAmenityLink', {
-    'name': fields.String(required=True,
-                          description='Name of the amenity to add')
+    'amenity_id': fields.String(required=True,
+                               description='ID of the amenity to add')
 })
 
 user_model = api.model('PlaceUser', {
@@ -96,7 +96,14 @@ class PlaceList(Resource):
             {
                 'id': place.id,
                 'title': place.title,
-                'price': place.price
+                'price': place.price,
+                'latitude': place.latitude,
+                'longitude': place.longitude,
+                'owner': {
+                    'id': place.owner.id,
+                    'first_name': place.owner.first_name,
+                    'last_name': place.owner.last_name
+                } if place.owner else None
             } for place in places
         ], 200
 
@@ -120,6 +127,47 @@ class PlaceResource(Resource):
             for amenity in place.amenities
         ]
 
+        # Récupérer les informations du propriétaire via la relation
+        if not place.owner:
+            return {'error': 'Place owner not found'}, 404
+        
+        owner_info = {
+            'id': place.owner.id,
+            'first_name': place.owner.first_name,
+            'last_name': place.owner.last_name,
+            'email': place.owner.email
+        }
+
+        # Récupérer les reviews de cette place
+        reviews = facade.get_reviews_by_place(place_id)
+        place_reviews = []
+        for review in reviews:
+            user = facade.get_user(review.user_id)
+            # Vérifier si l'utilisateur existe
+            if user is not None:
+                place_reviews.append({
+                    'id': review.id,
+                    'text': review.text,
+                    'rating': review.rating,
+                    'user': {
+                        'id': user.id,
+                        'first_name': user.first_name,
+                        'last_name': user.last_name
+                    }
+                })
+            else:
+                # Si l'utilisateur n'existe pas, afficher un utilisateur par défaut
+                place_reviews.append({
+                    'id': review.id,
+                    'text': review.text,
+                    'rating': review.rating,
+                    'user': {
+                        'id': 'unknown',
+                        'first_name': 'Utilisateur',
+                        'last_name': 'Supprimé'
+                    }
+                })
+
         return {
             'id': place.id,
             'title': place.title,
@@ -127,6 +175,14 @@ class PlaceResource(Resource):
             'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
+            'owner': {
+                'id': place.owner.id,
+                'first_name': place.owner.first_name,
+                'last_name': place.owner.last_name,
+                'email': place.owner.email
+            },
+            'amenities': place_amenities,
+            'reviews': place_reviews
         }, 200
 
     @jwt_required()
@@ -212,13 +268,22 @@ class PlaceReviewList(Resource):
             return {"error": "Place not found"}, 404
 
         reviews = facade.get_reviews_by_place(place_id)
-        return [
-            {
+        result = []
+        for review in reviews:
+            user = facade.get_user(review.user_id)
+            if user is not None:
+                user_name = f"{user.first_name} {user.last_name}"
+            else:
+                user_name = "Utilisateur Supprimé"
+            
+            result.append({
                 'id': review.id,
                 'text': review.text,
-                'rating': review.rating
-            } for review in reviews
-        ], 200
+                'rating': review.rating,
+                'user_id': review.user_id,
+                'user_name': user_name
+            })
+        return result, 200
 
 
 @api.route('/<place_id>/amenities')
@@ -255,14 +320,10 @@ class PlaceAmenityList(Resource):
         current_user_id = get_jwt_identity()
         data = api.payload
 
-        # Vérifier que place_id est fourni
-        if not place_id:
-            return {"error": "Place ID is required"}, 400
-
-        # Vérifier que le nom de l'amenity est fourni
-        amenity_name = data.get('name')
-        if not amenity_name or not amenity_name.strip():
-            return {"error": "Amenity name is required"}, 400
+        # Vérifier que l'amenity_id est fourni
+        amenity_id = data.get('amenity_id')
+        if not amenity_id or not amenity_id.strip():
+            return {"error": "Amenity ID is required"}, 400
 
         # Vérifier que la place existe
         place = facade.get_place(place_id)
@@ -276,11 +337,10 @@ class PlaceAmenityList(Resource):
             return {'error': 'Unauthorized action'}, 403
 
         try:
-            # Récupérer ou créer l'amenity par son nom
-            amenity = facade.get_amenity_by_name(amenity_name.strip())
+            # Vérifier que l'amenity existe
+            amenity = facade.get_amenity(amenity_id.strip())
             if not amenity:
-                # Créer l'amenity si elle n'existe pas
-                amenity = facade.create_amenity({'name': amenity_name.strip()})
+                return {"error": "Amenity not found"}, 404
 
             if amenity in place.amenities:
                 return {
@@ -290,7 +350,7 @@ class PlaceAmenityList(Resource):
                 }, 409
 
             # Ajouter l'amenity au place
-            facade.add_amenity_to_place(place_id, amenity.id)
+            facade.add_amenity_to_place(place_id, amenity_id.strip())
             return {"message": "Amenity successfully added to place"}, 201
         except ValueError as e:
             return {'error': str(e)}, 400

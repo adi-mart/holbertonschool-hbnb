@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- HEAD SECTION: Meta data and external resources -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER SECTION: Navigation and branding -->
+    <header>
+        <a href="index.html"><img src="images/logo.png" alt="Logo of application" class="logo"></a>
+        <nav>
+            <a class="login-button" href="login.html" id="login-link">Login</a>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT SECTION -->
+    <main>
+        <!-- PLACE TITLE: Dynamic title for the selected place -->
+        <h2 id="place-title">Place Details</h2>
+
+        <!-- PLACE DETAILS SECTION: Information about the place -->
+        <div class="place-details">
+            <div class="place-info" id="place-info"></div>
+        </div>
+
+        <!-- REVIEWS SECTION: Display existing reviews -->
+        <section id="reviews">
+            <h2>Reviews of the place</h2>
+        </section>
+
+        <!-- ADD REVIEW SECTION: Form to add new reviews -->
+        <section id="add-review">
+            <h2>Add a Review</h2>
+
+            <!-- Login prompt for unauthenticated users -->
+            <div id="add-review-button-container" style="display: none;">
+                <button id="add-review-btn" class="login-button">Login to Add Review</button>
+            </div>
+
+            <!-- Review form for authenticated users -->
+            <form id="review-form" style="display: none;">
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="">Select a rating</option>
+                    <option value="5">5 ★★★★★</option>
+                    <option value="4">4 ★★★★☆</option>
+                    <option value="3">3 ★★★☆☆</option>
+                    <option value="2">2 ★★☆☆☆</option>
+                    <option value="1">1 ★☆☆☆☆</option>
+                </select>
+                <label for="review">Review:</label>
+                <textarea id="review" name="review" required></textarea>
+                <button type="submit">Submit Review</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- FOOTER SECTION: Copyright information -->
+    <footer>
+        © 2025 - Holberton-HBnB - All Rights Reserved.
+    </footer>
+
+    <!-- SCRIPTS: JavaScript functionality -->
+    <script src="scripts.js"></script>
+</body>
+</html>

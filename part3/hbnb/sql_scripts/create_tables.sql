@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS places (
     price DECIMAL(10, 2) NOT NULL,
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
-    owner_id CHAR(36) NOT NULL,
+    owner_id CHAR(36),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (owner_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
 """Review Table"""
