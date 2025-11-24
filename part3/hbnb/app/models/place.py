@@ -30,6 +30,7 @@ class Place(BaseModel):
     price = db.Column(db.Float, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
+    image_url = db.Column(db.String(255), nullable=True)
 
     # Foreign key to User
     owner_id = db.Column(
@@ -53,7 +54,7 @@ class Place(BaseModel):
         back_populates='places'
     )
 
-    def __init__(self, title, description, price, latitude, longitude, owner):
+    def __init__(self, title, description, price, latitude, longitude, owner, image_url=None):
         """
         Initialize a new Place instance.
 
@@ -64,6 +65,7 @@ class Place(BaseModel):
             latitude (float): Geographic latitude (-90 to 90)
             longitude (float): Geographic longitude (-180 to 180)
             owner (User): The user who owns this place
+            image_url (str): Optional URL to place image
 
         Raises:
             ValueError: If any validation fails
@@ -97,6 +99,7 @@ class Place(BaseModel):
         self.price = float(price)
         self.latitude = float(latitude)
         self.longitude = float(longitude)
+        self.image_url = image_url.strip() if image_url else None
         self.owner_id = owner.id
 
     @validates('title')

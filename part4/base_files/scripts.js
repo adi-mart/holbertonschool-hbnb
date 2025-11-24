@@ -242,7 +242,13 @@ function displayPlaces(places) {
     places.forEach(place => {
         const div = document.createElement('div');
         div.className = 'place-card';
+        
+        // Ajouter l'image si disponible
+        const imageHtml = place.image_url ? 
+            `<img src="${place.image_url}" alt="${place.title || place.name}" class="place-image">` : '';
+        
         div.innerHTML = `
+            ${imageHtml}
             <h3>${place.title || place.name}</h3>
             <p>Price per night: ${place.price}€</p>
             <p>${place.description || ''}</p>
@@ -262,6 +268,25 @@ function displayPlaceDetails(place) {
     const placeTitle = document.getElementById('place-title');
     if (placeTitle) {
         placeTitle.textContent = place.title || place.name;
+    }
+
+    // Gérer l'image en dehors de .place-info pour respecter les paramètres obligatoires
+    const placeDetails = document.querySelector('.place-details');
+    if (placeDetails) {
+        // Supprimer l'ancienne image si elle existe
+        const existingImage = placeDetails.querySelector('.place-detail-image');
+        if (existingImage) {
+            existingImage.remove();
+        }
+        
+        // Ajouter la nouvelle image si elle existe
+        if (place.image_url) {
+            const imageElement = document.createElement('img');
+            imageElement.src = place.image_url;
+            imageElement.alt = place.title || place.name;
+            imageElement.className = 'place-detail-image';
+            placeDetails.insertBefore(imageElement, container);
+        }
     }
 
     container.innerHTML = `
