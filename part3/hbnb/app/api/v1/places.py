@@ -39,6 +39,7 @@ place_model = api.model('Place', {
                              description='Latitude of the place'),
     'longitude': fields.Float(required=True,
                               description='Longitude of the place'),
+    'image_url': fields.String(description='URL to place image'),
     'owner_id': fields.String(required=True, description='ID of the owner'),
     'owner': fields.Nested(user_model, description='Owner of the place'),
     'amenities': fields.List(fields.Nested(amenity_model),
@@ -68,6 +69,11 @@ class PlaceList(Resource):
         place_data = api.payload
 
         place_data['owner_id'] = current_user
+        
+        # Nettoyer image_url si elle est vide
+        if 'image_url' in place_data and not place_data['image_url']:
+            place_data['image_url'] = None
+            
         try:
             existing_place = facade.get_place_by_title(place_data.get('title'))
             if existing_place:
@@ -81,6 +87,7 @@ class PlaceList(Resource):
                 'price': new_place.price,
                 'latitude': new_place.latitude,
                 'longitude': new_place.longitude,
+                'image_url': getattr(new_place, 'image_url', None),
                 'owner_id': new_place.owner_id
             }, 201
         except ValueError as e:
@@ -99,6 +106,7 @@ class PlaceList(Resource):
                 'price': place.price,
                 'latitude': place.latitude,
                 'longitude': place.longitude,
+                'image_url': getattr(place, 'image_url', None),
                 'owner': {
                     'id': place.owner.id,
                     'first_name': place.owner.first_name,
@@ -175,6 +183,7 @@ class PlaceResource(Resource):
             'price': place.price,
             'latitude': place.latitude,
             'longitude': place.longitude,
+            'image_url': getattr(place, 'image_url', None),
             'owner': {
                 'id': place.owner.id,
                 'first_name': place.owner.first_name,
