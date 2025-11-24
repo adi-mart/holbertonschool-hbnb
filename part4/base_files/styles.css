@@ -190,7 +190,6 @@ footer {
     color: #333;
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     text-align: center;
 }
@@ -202,8 +201,14 @@ footer {
 
 .place-card h3 {
     margin-top: 0;
+    margin-bottom: 7px;
     color: #DC143C;
     font-size: 1.4em;
+}
+
+.place-card p {
+    margin-top: 0;
+    margin-bottom: 8px;
 }
 
 .place-card a {
@@ -235,12 +240,9 @@ footer {
     background: linear-gradient(145deg, #FAF0E6 0%, #F5DEB3 100%);
     color: #333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid #E0E0E0;
     max-height: 200px;
     overflow-y: auto;
     word-wrap: break-word;
-    padding: 10px;
-    margin-bottom: 10px;
 }
 
 .review-card p {
@@ -249,6 +251,72 @@ footer {
 
 .review-card strong {
     color: #DC143C;
+}
+
+/* Add Review Form */
+#add-review {
+    width: 100%;
+    margin: 45px 0 20px 0;
+    padding: 0;
+}
+
+#add-review h2 {
+    text-align: left;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+#review-form {
+    width: 100%;
+}
+
+#review-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+#review-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    background-color: #FFF;
+    font-size: 1em;
+}
+
+#review-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    background-color: #FFF;
+    font-size: 1em;
+    resize: vertical;
+    min-height: 100px;
+    box-sizing: border-box;
+}
+
+#review-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #DC143C;
+    color: #FFF;
+    border: none;
+    border-radius: 3px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#review-form button[type="submit"]:hover {
+    background-color: #B22222;
+}
+
+#add-review-button-container {
+    max-width: 600px;
+    width: 100%;
 }
 
 /* =============================================================================
